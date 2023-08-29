@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load social_share %}
+    {% add_copy_script %}
+    <!-- Add these lines at the end of your <head> tag -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+{%load static%}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Frontwall{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #161718; /* Dark background color */
+            color: rgb(207, 199, 199); /* Text color */
+        }
+        
+        .card {
+            background-color: #212529; /* Dark card background color */
+        }
+    
+        .card-title {
+            color: white; /* Card title text color */
+        }
+        
+        .form-control {
+            background-color: #343a40; /* Dark form input background color */
+            color: white; /* Form input text color */
+            
+        }
+        
+        .form-label{
+            color: white;
+        }
+        
+        .btn-primary {
+            background-color: #007bff; /* Dark primary button color */
+        }
+        
+        .btn-outline-secondary {
+            border-color: white; /* Button border color */
+            color: white; /* Button text color */
+        }
+        
+        .btn-link {
+            color: #007bff; /* Link color */
+        }
+    </style>
+</head>
+<body>
+  <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'main/frontwall-logo.png' %}" alt="Logo" width="196" height="30" class="d-inline-block align-text-top">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/me/">Me</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/upload/">Upload</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            More
+                        </a>
+                        <ul class="dropdown-menu bg-dark text-white" style="border-color: white;">
+                            <li><a class="dropdown-item bg-dark text-white" href="/about/">About</a></li>
+                            <li><a class="dropdown-item bg-dark text-white" href="/contact/">Contact</a></li>
+                            <li><hr class="dropdown-divider bg-dark" style="border-color: white;"></li>
+                            <li><a class="dropdown-item bg-dark text-white" href="/privacy_policy/">Privacy Policy</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/">Logout</a>
+                    </li>
+                </ul>
+                {% else %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/signup/">Signup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/">Login</a>
+                    </li>
+                </ul>
+                {% endif %}
+                
+                <form class="d-flex" method="get" action="{% url 'search' %}">
+                    <input required name="q" style="background-color: #211f1f; color:darkgray;" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+  </header>
+{% if messages %}
+    {% for message in messages %}
+    <script>
+            showMessage('{{ message.tags }}', '{{ message }}');
+        
+        function showMessage(tags, message) {
+            if (tags === 'info') {
+                alert(message);
+            }
+            // You can handle other message types (success, warning, error) as needed
+        }
+    </script>
+    {% endfor %}
+{% endif %}
+
+<main>
+    {% block content %}
+        <!-- Placeholder for content in extending templates -->
+    {% endblock %}
+</main>
+
+    <footer>
+        <p style="color:darkgray;">&copy; 2023 Frontwall. All rights reserved.</p>
+    </footer>
+</body>
+</html>

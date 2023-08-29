@@ -1,0 +1,42 @@
+{%extends 'main/base.html'%}
+
+{%block content%}
+
+{% if user.is_authenticated %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Horrayy !</strong>{{message}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {%endfor%}
+  {%endif%}
+  <br>
+  <div class="container">
+    <h1>Upload Wallpaper</h1>
+    <br>
+    <form action="/upload/" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <div class="mb-3">
+            <label for="caption" class="form-label">Caption</label>
+            <input name="caption" type="text" class="form-control" id="caption" placeholder="This is a beautiful wallpaper">
+          </div>
+          <div class="mb-3">
+            <label for="tags" class="form-label">Tags</label>
+            <textarea class="form-control" id="tags" name="tags" rows="2" placeholder="#frontwall"></textarea>
+          </div>
+          <div class="input-group mb-3">
+            <input required accept="image/*" type="file" class="form-control" id="wallpaper" name="wallpaper">
+            <label style="background-color: darkgray;" class="input-group-text" for="wallpaper">Upload</label>
+          </div>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-success">Upload Wallpaper</button>
+          </div>
+    </form>
+</div>
+{% else %}
+<h1>Please <a href="/signup/">Signup</a> or <a href="/login/">Log in</a> in</h1>
+{% endif %}
+<br>
+
+{%endblock%}

@@ -1,0 +1,35 @@
+{%extends 'main/base.html'%}
+
+{%block content%}
+<br>
+<div class="container">
+    <ul class="list-group bg-dark text-white">
+        <li class="list-group-item active text-white" aria-current="true"><h3>{{user.username}}</h5></li>
+        <li class="list-group-item bg-dark text-white"><a>{{user.profile.bio}}</a></li>
+        <li class="list-group-item bg-dark text-white">
+            <h5>Uploads</h5>
+            <ul class="list-group list-group-horizontal">
+                {% for wallpaper in user_wallpapers %}
+                    <li class="list-group-item bg-dark">
+                        <a href="{%url 'wallpaper' wallpaper.id%}">
+                            <img src="{{ wallpaper.image.url }}" alt="{{wallpaper.tags }}" class="img-thumbnail ext-center img-fluid" style="border-color: #343a40; max-height: 400px; object-fit: cover;">                  
+                        </a>
+                    </li>
+                    {% if forloop.counter > 0 and forloop.counter|divisibleby:3 %}
+                              </ul>
+                              <hr>
+                              <ul class="list-group list-group-horizontal">
+                    {% endif %}
+                {% empty %}
+                    <div class="col">
+                        <div class="row">
+                            <p>No wallpapers uploaded by {{user.username}}</p>
+                        </div>
+                    </div>        
+                {% endfor %}
+            </ul>
+        </li>
+      </ul>
+</div>
+
+{%endblock%}

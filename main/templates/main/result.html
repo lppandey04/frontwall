@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<br>
+    <div class="container">
+        <h2 class="text-center">Search Results for "{{ query }}"</h2>
+    </div>
+    <br>
+    {% if result %}
+        <ul>
+            {% for x in result %}
+            <a href="{%url 'wallpaper' x.id%}">
+                <!-- <img src="{{ x.image.url }}" class="d-block w-100" alt=> -->
+                <!-- <img src="{{ x.image.url }}" class="img-thumbnail" alt="{{x.caption}}"> -->
+                <!-- <img src="" class="rounded float-start" alt=""> -->
+                <img name="wallpaper_img" id="wallpaper_img" src="{{ x.image.url }}" class="rounded mx-auto d-block" alt="{{x.tags}}" width="250" height="350">
+                <br>
+            </a>
+            <p class="text-center">{{x.caption}}</p>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-center">No results found.</p>
+    {% endif %}
+{% endblock %}

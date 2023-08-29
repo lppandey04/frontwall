@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Home - Frontwall{% endblock %}
+
+{% block content %}
+<br>
+<div class="container">
+    <a href="/upload/" ><button type="button" class="btn btn-primary">Upload Wallpaper</button></a>
+</div>
+<br>
+<div class="container">
+    {%for x in wallpapers%}
+        <a href="{%url 'wallpaper' x.id%}">
+            <!-- <img src="{{ x.image.url }}" class="d-block w-100" alt=> -->
+            <!-- <img src="{{ x.image.url }}" class="img-thumbnail" alt="{{x.caption}}"> -->
+            <!-- <img src="" class="rounded float-start" alt=""> -->
+            <img src="{{ x.image.url }}" class="rounded mx-auto d-block" alt="{{x.tags}}" width="250" height="350">
+            <br>
+        </a>
+        <p class="text-center">{{x.caption}}</p>
+    {%endfor%}
+    <!-- Repeat the above .wallpaper divs for more thumbnails -->
+</div>
+{% endblock %}
+ 

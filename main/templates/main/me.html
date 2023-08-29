@@ -1,0 +1,97 @@
+{%extends 'main/base.html'%}
+
+{%block content%}
+{% if user.is_authenticated %}
+
+<br>
+<div class="container">
+    <h3>Welcome, {{username}}</h3>
+    <br>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              Your Uploads
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body bg-dark text-white">
+                <ul class="list-group list-group-horizontal">
+                    {% for wallpaper in user_wallpapers %}
+                        <li class="list-group-item bg-dark">
+                            <a href="{%url 'wallpaper' wallpaper.id%}">
+                              <img src="{{ wallpaper.image.url }}" alt="{{wallpaper.tags }}" class="img-thumbnail ext-center img-fluid" style="border-color: #343a40; max-height: 400px; object-fit: cover;">                  
+                            </a>
+                        </li>
+                        {% if forloop.counter > 0 and forloop.counter|divisibleby:3 %}
+                              </ul>
+                              <hr>
+                              <ul class="list-group list-group-horizontal">
+                        {% endif %}
+                    {% empty %}
+                        <div class="col">
+                            <div class="row">
+                                <p>No wallpapers uploaded by you yet.</p>
+                            </div>
+                            <div class="roe">
+                                <a href="/upload/"><button class="btn btn-link">Upload</button></a>
+                            </div>
+                        </div>        
+                    {% endfor %}
+                </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+              <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  Favorites
+              </button>
+          </h2>
+          <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body bg-dark text-white">
+                  <ul class="list-group list-group-horizontal">
+                      {% for fav_wallpaper in fav_wallpapers %}
+                          <li class="list-group-item bg-dark">
+                              <a href="{% url 'wallpaper' fav_wallpaper.id %}">
+                                <img src="{{ fav_wallpaper.image.url }}" alt="{{fav_wallpaper.tags }}" class="img-thumbnail ext-center img-fluid" style="border-color: #343a40; max-height: 400px; object-fit: cover;">                  
+                              </a>
+                          </li>
+                          {% if forloop.counter > 0 and forloop.counter|divisibleby:3 %}
+                              </ul>
+                              <hr>
+                              <ul class="list-group list-group-horizontal">
+                          {% endif %}
+                      {% empty %}
+                          <p>No Favorite wallpapers</p>
+                      {% endfor %}
+                  </ul>
+              </div>
+          </div>
+        </div>      
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+              More
+            </button>
+          </h2>
+          <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body bg-dark text-white"> 
+              <ul class="list-group">
+                <a href="/user/edit" style="text-decoration: none;"><li class="list-group-item bg-dark text-white">Edit Profile</li></a>
+                <a href="/user/change_password/" style="text-decoration: none;"><li class="list-group-item bg-dark text-white">Change Passoword</li></a>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+<br>
+{% else %}
+<h1>Please <a href="/signup/">Signup</a> or <a href="/login/">Log in</a></h1>
+<br>
+{% endif %}
+<br>
+
+{%endblock%}
