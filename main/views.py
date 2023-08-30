@@ -286,3 +286,12 @@ def user_profile(request, username):
     user_wallpaper = Wallpaper.objects.filter(publisher=user)
     data = {'user':user, 'user_wallpapers':user_wallpaper}
     return render(request,'main/profile.html',data)
+
+def greet(request):
+    user = request.user
+    if user.is_authenticated():
+        messages.info(request, f"Hello, {user}")
+        return redirect("Frontwall")    
+    else:
+        messages.info(request, "You need to log in first")
+        return redirect("Frontwall")
