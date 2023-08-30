@@ -295,3 +295,11 @@ def greet(request):
     else:
         messages.info(request, "You need to log in first")
         return redirect("Frontwall")
+
+def bye(request):
+    user = request.user
+    if user.is_authenticated():
+        messages.info(request, 'error')
+    else:
+        messages.info(request, f'Bye {user}')
+        return redirect('Frontwall')
